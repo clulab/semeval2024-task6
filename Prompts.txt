@@ -1,0 +1,176 @@
+DM:
+Task Description:
+This task involves evaluating the output of a Natural Language Processing (NLP) model to determine if it constitutes a hallucination. A hallucination in this context means that the model's output contains information not supported by the provided semantic reference. The task will use the following inputs:
+
+Source (src): This is the context in which a word is used. The word to be defined may or may not be enclosed within special tokens <define> and </define>.
+
+Target (tgt): This is the intended, correct definition of the word, typically sourced from a reference like Wiktionary.
+
+Hypothesis (hyp): This is the actual output produced by the NLP model - the definition it generated for the given word.
+
+ALWAYS ASSUME BOTH THE TARGET AND SOURCE FOR SEMANTIC REFERENCE FOR EVALUATING THE HYPOTHESIS
+
+The task is to assess the hypothesis against the indicated reference (source AND target) to determine if it constitutes a hallucination. The output will be the probability of the hypothesis being a hallucination, represented as a value in the range [0.0, 1.0]. This probability is derived from the consensus of five human annotators, with each increment of 0.2 in the probability representing one annotator's opinion.
+
+Examples:
+Input:
+
+'hyp': 'Having a relationship ; connected .'
+'src': 'Electric and magnetic forces are closely related .'
+'tgt': 'Standing in relation or connection .'
+Output:
+
+p(Hallucination): 0.8
+Input:
+
+'hyp': 'To negotiate a price or terms of a transaction .'
+'src': 'They had to bargain for a few minutes to get a decent price for the rug .'
+'tgt': 'To make a bargain ; to make a deal or contract for the exchange of property or services ; to negotiate'
+Output:
+
+p(Hallucination): 0.0
+Input:
+
+'hyp': 'A religious service in which the sabbath is observed .'
+'src': 'Tefillin are not used on Sabbaths and holidays , so unless you attend a minyan on weekday mornings or grew up in a home where men prayed daily , this practice may be unfamiliar to you .'
+'tgt': 'A Jewish prayer service .'
+Output:
+
+p(Hallucination): 1.0
+Input:
+
+'hyp': '(slang, derogatory) A contemptible person.'
+'src': 'And that <define> jiboney </define> across the hall . He makes life worse than it is . Where he gets his money for booze , who knows ?'
+'tgt': 'A low-level tough or thug, a mean man.'
+Output:
+
+p(Hallucination): 0.6
+Input:
+
+'hyp': '(informal) A test to determine whether something has a certain vibe.'
+'src': "Usually we 'll listen to a track . It just depends . Sometimes they have a funny premise or a certain vibe and we 'll make something oriented towards that premise or vibe . If it passes the <define> vibe check </define> , we kick things off ."
+'tgt': '(slang) An impromptu attempt to ascertain mood, opinions, or attributes.',
+Output:
+
+p(Hallucination): 0.4
+
+Input:
+
+'hyp': '(transitive) To make tacky.'
+'src': 'to <define> tackify </define> rubber'
+'tgt': '(transitive) To make (a material) tacky.'
+Output:
+
+p(Hallucination): 0.2
+
+PG:
+Task Description:
+This task involves evaluating the output of a Natural Language Processing (NLP) model to determine if it constitutes a hallucination. A hallucination in this context means that the model's output contains information not supported by the provided semantic reference. The task will use the following inputs:
+
+Source (src): input passed to be parphrased to NLP model
+Target (tgt): This is the intended, correct paraphrased "gold" text
+Hypothesis (hyp): This is the actual output produced by the NLP model - the paraphrase it generated for the given word.
+
+ALWAYS ASSUME BOTH THE TARGET AND SOURCE FOR SEMANTIC REFERENCE FOR EVALUATING THE HYPOTHESIS
+
+The task is to assess the hypothesis against the indicated reference (source AND target) to determine if it constitutes a hallucination. The output will be the probability of the hypothesis being a hallucination, represented as a value in the range [0.0, 1.0]. This probability is derived from the consensus of five human annotators, with each increment of 0.2 in the probability representing one annotator's opinion.
+
+Examples:
+
+Input:
+'src': 'Let me out of here.'
+'tgt': 'Someone let me out.'
+'hyp': 'Let me leave.'
+Output:
+p(Hallucination): 0.0
+
+Input:
+'src': 'I have a permit.'
+'tgt': 'Uh, I'm validated.
+'hyp': 'I have a permit to carry it.'
+Output:
+p(Hallucination): 1.0
+
+Input:
+'hyp': "You're gonna leave the talking to me alone."
+'src': 'Leave the talking to me.'
+'tgt': 'Let me do all the talking.
+Output:
+p(Hallucination): 0.4
+
+Input:
+'hyp': "We don't have the money to risk it, all right?"
+'src': "We can't afford to risk it."
+'tgt': "We can't risk that."
+Output:
+p(Hallucination): 0.6
+
+Input:
+'hyp': 'It is not impossible.'
+'src': 'Nothing is impossible.'
+'tgt': 'There's nothing that can't be done.'
+Output:
+p(Hallucination): 0.2
+
+Input:
+'hyp': 'A number between five and eight.'
+'src': 'A five, six, seven, eight.'
+'tgt': 'And 5, 6, 7, 8.',
+Output:
+p(Hallucination): 0.8
+
+MT:
+Task Description:
+This task involves evaluating the output of a Natural Language Processing (NLP) model to determine if it constitutes a hallucination. A hallucination in this context means that the model's output contains information not supported by the provided semantic reference. The task will use the following inputs:
+
+Source (src): input passed to be parphrased to NLP model
+Target (tgt): This is the intended, correct translation of the sentence or the "gold" text
+Hypothesis (hyp): This is the actual output produced by the NLP model - the translation it generated for the given sentence.
+
+ALWAYS ASSUME BOTH THE TARGET AND SOURCE FOR SEMANTIC REFERENCE FOR EVALUATING THE HYPOTHESIS
+
+The task is to assess the hypothesis against the indicated reference (source AND target) to determine if it constitutes a hallucination. The output will be the probability of the hypothesis being a hallucination, represented as a value in the range [0.0, 1.0]. This probability is derived from the consensus of five human annotators, with each increment of 0.2 in the probability representing one annotator's opinion.
+
+Examples:
+
+Input:
+'hyp': 'He is expected to run for president in 2016.'
+'src': 'Akuganiziridwa kuti azayima nawo pa chisankho cha purezidenti mucha chaka cha 2016.'
+'tgt': 'He is speculated to make a run for president in 2016.'
+Output:
+p(Hallucination): 0.0
+
+Input:
+'src': 'Andre biorytme-baserte alternativ involverer å drikke mye væske (særlig vann eller te, kjente vanndrivende væsker) før søvn, som vil tvinge en til å stå opp for å urinere'
+'tgt': 'Other biorhythm-based options involve drinking lots of fluid (particularly water or tea, a known diuretic) prior to sleep, forcing one to get up to urinate.'
+'hyp': 'Another biorhythm-based alternative involves drinking plenty of fluid (such as water or tea, known as water-driven fluid) before bedtime, which will force one to stand up to urinate.'
+Output:
+p(Hallucination): 0.2
+
+Input:
+'hyp': 'Pinagsapata and Martelly were the speakers of the nine-member Provisional Electoral Council (CEP).'
+'src': 'Pinagsapata ni Martelly idi kalman ti baro a Provisional Electoral Council (CEP) nga addaan siam a miembro.'
+'tgt': 'Martelly swore in a new Provisional Electoral Council (CEP) of nine members yesterday.'
+Output:
+p(Hallucination): 0.4
+
+Input:
+"hyp": "Six detainees, including children and the elderly, were released as Filipino photographers."
+'src': "Pillillu īkā vuddulu sā 6 mādi baṇḍīlu Filipino bōtōgrābarlu lāgā vīduḍalu cheyāru."
+"tgt": "Six hostages, including the children and elderly, were released early, as were the Filipino photographers."
+Output:
+p(Hallucination): 0.6
+
+Input:
+"hyp": "The bill could be amended, a unanimous state-level agreement was needed, but the state-level central government acted so lightly that its representatives were often not hierarchical."
+"src": "Lai panti varētu tikt grozīti, bija nepieciešama visu štatu vienbalsīga piekrišana, bet štati pret centrālo valdību izturējās tik vieglprātīgi, ka to pārstāvji bieži vien nebija ieradušies."
+"tgt": "The Articles required unanimous consent from all the states before they could be amended and states took the central government so lightly that their representatives were often absent."
+Output:
+p(Hallucination): 0.8
+
+Input:
+"hyp": "The oven is full of food and drinks."
+"src": "فرنو ضغ نا فرمد بضن غتين كرو فرمد ضا غد بى صسنغن"
+"tgt": "The scenes are displayed on the pyramids and the different pyramids are lit up."
+Output:
+p(Hallucination): 1.0
